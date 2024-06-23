@@ -14,5 +14,5 @@ class TestNaiveCPU(unittest.TestCase):
         for index in indexes_to_add_os:
             game_state[index] = "O"
 
-        naive_cpu = NaiveCPU("X")
+        naive_cpu = NaiveCPU()
         assert game_state[naive_cpu.make_move(game_state)] == ""
