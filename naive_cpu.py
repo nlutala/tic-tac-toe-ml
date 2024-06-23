@@ -1,6 +1,6 @@
 '''
 A CPU for the tic-tac-toe game that makes random decisions as to where it will
-place it's "X" or "O"
+place it's "X"
 '''
 from secrets import choice
 
@@ -8,12 +8,9 @@ class NaiveCPU:
     '''
     An object for the naive CPU to play tic-tac-toe against.
     '''
-    def __init__(self, symbol: str) -> None:
-        '''
-        Param:
-        symbol (str) - a character either "X" or "O"
-        '''
-        self.symbol = symbol
+    def __init__(self) -> None:
+        # The CPU is always "X" and the user will be "O"
+        self.symbol = "X"
 
     def get_symbol(self) -> str:
         return self.symbol
