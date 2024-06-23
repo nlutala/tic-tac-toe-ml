@@ -1,4 +1,8 @@
-import random
+'''
+A CPU for the tic-tac-toe game that makes random decisions as to where it will
+place it's "X" or "O"
+'''
+from secrets import choice
 
 class NaiveCPU:
     '''
@@ -12,7 +16,7 @@ class NaiveCPU:
         self.symbol = symbol
 
     def get_symbol(self) -> str:
-        return self.get_symbol
+        return self.symbol
 
     def make_move(self, game_state: list) -> int:
         '''
@@ -25,5 +29,4 @@ class NaiveCPU:
             i for i in range(len(game_state)) if game_state[i] == ""
         ]
 
-        return free_indexes[random.randint(0,len(free_indexes))]
-
+        return choice(free_indexes)
