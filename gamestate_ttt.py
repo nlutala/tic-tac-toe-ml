@@ -48,6 +48,8 @@ class GameState:
         Returns True if there is a winner or all parts of the grid
         have been filled out. False otherwise
         '''
+        is_done = True
+
         if self.game_state[0] == self.game_state[1] and self.game_state[1] == self.game_state[2] and self.game_state[0] != "":
             if self.game_state[0] == "X":
                 self.outcome = "W"
@@ -91,9 +93,12 @@ class GameState:
         elif self.game_state.count("") == 0:
             self.outcome = "D"
         else:
-            return False
+            is_done = False
+
+        if is_done:
+            self._write_results_to_file()
         
-        return True
+        return is_done
 
     def _write_results_to_file(self) -> None:
         '''
