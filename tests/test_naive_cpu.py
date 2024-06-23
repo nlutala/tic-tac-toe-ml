@@ -1,5 +1,7 @@
 '''
 Test the functionality of the NaiveCPU class
+
+Nathan Lutala (nlutala)
 '''
 import unittest, random
 from naive_cpu import NaiveCPU
