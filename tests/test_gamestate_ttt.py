@@ -6,7 +6,7 @@ Nathan Lutala (nlutala)
 from gamestate_ttt import GameState
 from naive_cpu import NaiveCPU
 from secrets import choice
-import unittest
+import os, unittest
 
 class TestGameState(unittest.TestCase):
     def test_gamestate_raises_value_error_if_player_tries_to_put_symbol_on_taken_place(self):
@@ -41,6 +41,7 @@ class TestGameState(unittest.TestCase):
         assert gs.outcome == ""
 
     def test_gamestate_is_done_method_after_all_places_are_filled(self):
+        base_dir = os.path.dirname(__file__)
         gs = GameState()
         cpu = NaiveCPU()
 
@@ -56,5 +57,10 @@ class TestGameState(unittest.TestCase):
             except IndexError:
                 break
 
+        output_file = os.path.join(base_dir, "game_results_ttt.txt")
+
         assert gs.is_done() == True
+        assert os.path.isfile(output_file)
         assert gs.outcome != ""
+
+        os.remove(output_file)
