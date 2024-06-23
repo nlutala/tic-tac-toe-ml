@@ -1,6 +1,8 @@
 '''
 A CPU for the tic-tac-toe game that makes random decisions as to where it will
 place it's "X"
+
+Nathan Lutala (nlutala)
 '''
 from secrets import choice
 
