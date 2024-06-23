@@ -106,7 +106,7 @@ class GameState:
         '''
         if "game_results_ttt.txt" not in os.listdir():
             with open("game_results_ttt.txt", "w") as file:
-                file.write("".join(self.game_state) + self.outcome)
+                file.write("".join(self.game_state) + self.outcome + "\n")
         else:
             with open("game_results_ttt.txt", "a") as file:
-                file.write("".join(self.game_state) + self.outcome)
+                file.write("".join(self.game_state) + self.outcome + "\n")
