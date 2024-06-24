@@ -57,7 +57,9 @@ class TestGameState(unittest.TestCase):
             except IndexError:
                 break
 
-        output_file = os.path.join(base_dir, "game_results_ttt.txt")
+        parent_directory = os.path.abspath(os.path.join(base_dir, os.pardir))
+        output_file = os.path.join(parent_directory, "game_results_ttt.txt")
+        print(output_file)
 
         assert gs.is_done() == True
         assert os.path.isfile(output_file)
