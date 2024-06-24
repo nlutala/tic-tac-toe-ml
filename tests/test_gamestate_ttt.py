@@ -58,6 +58,7 @@ class TestGameState(unittest.TestCase):
                 break
 
         output_file = os.path.join(base_dir, "game_results_ttt.txt")
+        print(output_file)
 
         assert gs.is_done() == True
         assert os.path.isfile(output_file)
