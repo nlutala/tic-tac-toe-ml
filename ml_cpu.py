@@ -25,12 +25,37 @@ class MLCPU:
 
         with open("game_results_ttt.txt") as file:
             for row in file:
-                self.data.append(row)
+                row_to_add = list(row[:len(row)-1])
+                row_to_add = self._prep_data(row_to_add)
+                self.data.append(row_to_add)
 
-        # TODO: Add a step here that trains the machine learning model
+        print(self.data)
 
     def get_symbol(self):
         return self.symbol
+    
+    def _prep_data(self, row: list) -> list:
+        '''
+        Replaces all Xs with 1s and Os with -1s
+
+        Params:
+        row (list) - a list in the game_results_ttt.txt file
+
+        Retuns a new list of 1, -1 and either W, D or L
+        '''
+        new_row = []
+
+        for r in row:
+            if r == "X":
+                new_row.append(1)
+            elif r == "O":
+                new_row.append(-1)
+            elif r == "":
+                new_row.append(0)
+            else:
+                new_row.append(r)
+
+        return new_row
     
     def make_move(self, game_state: list):
         '''
@@ -41,4 +66,3 @@ class MLCPU:
         '''
         # TODO: Add a step here that makes a move based on what's more likely
         # for it to get that W.
-        pass
