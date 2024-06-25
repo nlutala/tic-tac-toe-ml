@@ -41,6 +41,8 @@ class GameState:
         else:
             self.game_state[index] = symbol
 
+        self.is_done()
+
     def is_done(self) -> bool:
         '''
         Method to determine whether the game is done and who won.
@@ -94,13 +96,10 @@ class GameState:
             self.outcome = "D"
         else:
             is_done = False
-
-        if is_done:
-            self._write_results_to_file()
         
         return is_done
 
-    def _write_results_to_file(self) -> None:
+    def write_results_to_file(self) -> None:
         '''
         Private function to write the results of the game to a file
         '''

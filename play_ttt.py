@@ -6,83 +6,51 @@ Nathan Lutala (nlutala)
 
 from gamestate_ttt import GameState
 from naive_cpu import NaiveCPU
-from tkinter import *
-from tkinter import ttk, messagebox
 
-class PlayTTT(ttk.Frame):
-    def __init__(self, master=None) -> None:
-        '''
-        Creates the home page of the game
-        '''
-        self.master = master
-        super().__init__(master, padding=20)
-        self.pack()
 
-        # Make the frame follow a grid format
-        self.grid()
+if __name__ == "__main__":
+    gs = GameState()
+    cpu = NaiveCPU()
 
-        # Add content to the frame
-        ttk.Label(self, 
-                  text="Tic-tac-Toe",
-                  font="Kenney-Future"
-                  ).grid(column=0, row=0, pady=5)
-        Button(self, 
-                text="Instructions",
-                font="Kenney-Future",
-                command=self.show_instructions
-                ).grid(column=0, row=1, pady=5)
-        Button(self, 
-                text="Play Against Naive CPU",
-                font="Kenney-Future",
-                command=None).grid(column=0, row=2, pady=5)
-        Button(self, 
-                text="Play Against CPU using Machine Learning Model", 
-                font="Kenney-Future",
-                command=None).grid(column=0, row=3, pady=5)
-        Button(self, 
-                text="Quit", 
-                font="Kenney-Future",
-                command=root.destroy).grid(column=0, row=4, pady=5)
+    taken_places = ["" for i in range(9)]
+
+    while not gs.is_done():
+        for i in range(len(gs.get_game_state())):
+            if gs.get_game_state()[i] == "":
+                taken_places[i] = i
+            else:
+                taken_places[i] = "X"
+            
+        print('''
+The grid below shows the numbers you can enter to place your "O".
+Places marked with an "X" are places that have already been used.
+''')
+        for i in range(0, len(taken_places), 3):
+            print(taken_places[i:i+3])
+
+        print("")
+
+        for i in range(0, len(gs.get_game_state()), 3):
+            print(gs.get_game_state()[i:i+3])
         
-    def get_root(self):
-        return self.master
-    
-    def show_instructions(self):
-        messagebox.showinfo(
-            title="Instructions", 
-            message="The aim of the game is to get 3 'O's " +
-                    "vertically, horizontally or diagonally " +
-                    "before the CPU."
-        )
-
-
-root = Tk()
-play_ttt = PlayTTT(root)
-play_ttt.mainloop()
-
-# button = ttk.Button(content)
-
-# if __name__ == "__main__":
-#     gs = GameState()
-#     cpu = NaiveCPU()
-
-#     while not gs.is_done():
-#         for i in range(0, len(gs.get_game_state()), 3):
-#             print(" ".join(gs.get_game_state()[i:i+3]))
+        user_position = int(input('''
+Your turn.
+Enter the position you would like to place your "O".
+            '''))
         
-#         user_position = int(input('''
-# Your turn.
-# Enter the position you would like to place your "O".
-#             '''))
-        
-#         gs.set_game_state(user_position, "O")
-#         gs.set_game_state(cpu.make_move(gs.get_game_state()), cpu.get_symbol())
+        gs.set_game_state(user_position, "O")
+        if gs.is_done():
+            break
+        else:
+            gs.set_game_state(cpu.make_move(gs.get_game_state()), cpu.get_symbol())
 
-#     if gs.outcome == "W":
-#         print("Unfortunately you lost that game.")
-#     elif gs.outcome == "D":
-#         print("It was a tie!")
-#     else:
-#         print("You won!")
+    gs.write_results_to_file()
 
-#     print("\nThe results of this game was written to a text file.")
+    if gs.outcome == "W":
+        print("Unfortunately you lost that game.")
+    elif gs.outcome == "D":
+        print("It was a tie!")
+    else:
+        print("You won!")
+
+    print("\nThe results of this game was written to a text file called: game_results_ttt.txt")
