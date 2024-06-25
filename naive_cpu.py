@@ -10,9 +10,16 @@ class NaiveCPU:
     '''
     An object for the naive CPU to play tic-tac-toe against.
     '''
-    def __init__(self) -> None:
-        # The CPU is always "X" and the user will be "O"
-        self.symbol = "X"
+    def __init__(self, symbol="X") -> ValueError:
+        '''
+        Param:
+        symbol (str) - rather a character (either "X" or "O").
+        By default the CPU is always "X" and the user will be "O"
+        '''
+        self.symbol = symbol
+
+        if self.symbol.upper() not in ["X", "O"]:
+            raise ValueError("Incorrect input. Expected either 'X' or 'O'.")
 
     def get_symbol(self) -> str:
         return self.symbol
@@ -22,7 +29,7 @@ class NaiveCPU:
         Param:
         game_state (list) - an object representing the current grid of the game
 
-        Returns an int of the index to 
+        Returns an int of the index to place the CPU's symbol
         '''
         free_indexes = [
             i for i in range(len(game_state)) if game_state[i] == ""

@@ -10,22 +10,30 @@ from naive_cpu import NaiveCPU
 from secrets import choice
 
 
-if __name__ == "__main__":
-    for i in range(100):
+def create_game_data(games=100):
+    '''
+    Plays a game between two naive CPUs and writes the
+    result of the game to a file called "game_results_ttt.txt"
+    '''
+    for i in range(games):
         gs = GameState()
-        cpu = NaiveCPU()
+        cpu_1 = NaiveCPU("X")
+        cpu_2 = NaiveCPU("O")
 
         while gs.get_game_state().count("") != 0:
             # Let the Naive CPU put an item in place first
-            index = cpu.make_move(gs.get_game_state())
-            gs.set_game_state(index, cpu.get_symbol())
-
-            # Let the human (myself) put an item in the same place the CPU did
-            free_spaces = [i for i in range(len(gs.get_game_state())) if gs.get_game_state()[i] == ""]
             try:
-                gs.set_game_state(choice(free_spaces), "O")
+                index = cpu_1.make_move(gs.get_game_state())
+                gs.set_game_state(index, cpu_1.get_symbol())
+
+                index = cpu_2.make_move(gs.get_game_state())
+                gs.set_game_state(index, cpu_2.get_symbol())
             except IndexError:
                 break
 
         gs.write_results_to_file()
+
+
+if __name__ == "__main__":
+    create_game_data()
         
