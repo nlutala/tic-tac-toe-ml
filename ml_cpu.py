@@ -6,14 +6,11 @@ Nathan Lutala (nlutala)
 '''
 
 from create_ttt_game_data import create_game_data
-from sklearn.datasets import load_iris
-from sklearn import tree
 import os
 
 class MLCPU:
     def __init__(self, symbol="X"):
         self.symbol = symbol
-        self.ttt_moves_tree = tree.DecisionTreeClassifier(criterion="entropy")
         self.data = []
         self.target = []
 
