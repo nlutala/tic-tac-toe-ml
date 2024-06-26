@@ -11,13 +11,12 @@ from ml_cpu import MLCPU
 if __name__ == "__main__":
     gs = GameState()
     cpu = MLCPU()
-    cpu.train()
 
-    taken_places = ["" for i in range(9)]
+    taken_places = ["_" for i in range(9)]
 
     while not gs.is_done():
         for i in range(len(gs.get_game_state())):
-            if gs.get_game_state()[i] == "":
+            if gs.get_game_state()[i] == "_":
                 taken_places[i] = i
             else:
                 taken_places[i] = "X"
@@ -39,11 +38,20 @@ Your turn.
 Enter the position you would like to place your "O".
             '''))
         
+        while user_position not in gs.get_available_positions():
+            print("There was something wrong with your input.")
+            user_position = int(input('''Enter the position you would like to place your "O".
+            '''))
+        
         gs.set_game_state(user_position, "O")
         if gs.is_done():
             break
         else:
-            gs.set_game_state(cpu.make_move(gs.get_game_state()), cpu.get_symbol())
+            gs.set_game_state(
+                cpu.make_move(
+                    gs.get_game_state(), gs.get_available_positions()
+                ), cpu.get_symbol()
+            )
 
     gs.write_results_to_file()
 
