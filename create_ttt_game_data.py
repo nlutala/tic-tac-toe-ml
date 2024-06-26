@@ -20,15 +20,15 @@ def create_game_data(games=100):
         cpu_1 = NaiveCPU("X")
         cpu_2 = NaiveCPU("O")
 
-        while gs.get_game_state().count("") != 0:
+        while not gs.is_done():
             # Let the Naive CPU put an item in place first
-            try:
-                index = cpu_1.make_move(gs.get_game_state())
-                gs.set_game_state(index, cpu_1.get_symbol())
+            index = cpu_1.make_move(gs.get_available_positions())
+            gs.set_game_state(index, cpu_1.get_symbol())
 
-                index = cpu_2.make_move(gs.get_game_state())
+            if len(gs.get_available_positions()) != 0:
+                index = cpu_2.make_move(gs.get_available_positions())
                 gs.set_game_state(index, cpu_2.get_symbol())
-            except IndexError:
+            else:
                 break
 
         gs.write_results_to_file()

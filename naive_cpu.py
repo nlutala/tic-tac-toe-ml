@@ -24,15 +24,11 @@ class NaiveCPU:
     def get_symbol(self) -> str:
         return self.symbol
 
-    def make_move(self, game_state: list) -> int:
+    def make_move(self, free_indexes: list) -> int:
         '''
         Param:
-        game_state (list) - an object representing the current grid of the game
+        game_state (list) - a list of all the indexes that can be used
 
         Returns an int of the index to place the CPU's symbol
         '''
-        free_indexes = [
-            i for i in range(len(game_state)) if game_state[i] == ""
-        ]
-
         return choice(free_indexes)
