@@ -8,6 +8,7 @@ Nathan Lutala (nlutala)
 '''
 import os
 
+
 class GameState:
     def __init__(self, write_to_file=True) -> None:
         '''

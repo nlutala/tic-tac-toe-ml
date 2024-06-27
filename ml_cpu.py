@@ -7,7 +7,7 @@ Nathan Lutala (nlutala)
 
 from secrets import choice
 from sklearn import tree
-import os
+
 
 class MLCPU:
     def __init__(self, symbol="X"):
@@ -19,7 +19,7 @@ class MLCPU:
         if self.symbol.upper() not in ["X", "O"]:
             raise ValueError("Incorrect input. Expected either 'X' or 'O'.")
 
-        with open("ttt_good_moves.txt") as file:
+        with open("assets/ttt_good_moves.txt") as file:
             for row in file:
                 row_to_add = list(row[:len(row)-1])
                 row_to_add = self._prep_data(row_to_add)

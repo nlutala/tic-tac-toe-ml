@@ -10,15 +10,15 @@ from naive_cpu import NaiveCPU
 from secrets import choice
 
 
-def create_game_data(games=100):
+def create_game_results(games=100):
     '''
     Plays a game between two naive CPUs and writes the
     result of the game to a file called "game_results_ttt.txt"
     '''
     for i in range(games):
         gs = GameState()
-        cpu_1 = NaiveCPU("X")
-        cpu_2 = NaiveCPU("O")
+        cpu_1 = NaiveCPU("O")
+        cpu_2 = NaiveCPU("X")
 
         while not gs.is_done():
             # Let the Naive CPU put an item in place first
@@ -35,5 +35,5 @@ def create_game_data(games=100):
 
 
 if __name__ == "__main__":
-    create_game_data()
+    create_game_results()
         

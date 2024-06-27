@@ -4,7 +4,9 @@ place it's "X"
 
 Nathan Lutala (nlutala)
 '''
+
 from secrets import choice
+
 
 class NaiveCPU:
     '''
