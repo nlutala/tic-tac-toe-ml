@@ -18,4 +18,7 @@ class TestMLCPU(unittest.TestCase):
             naive_cpu.make_move(gs.get_available_positions()), naive_cpu.get_symbol()
         )
 
-        assert gs.get_game_state()[ml_cpu.make_move(gs.get_available_positions())] == "_"
+        game_state = gs.get_game_state()
+        available_positions = gs.get_available_positions()
+
+        assert game_state[ml_cpu.make_move(game_state, available_positions)] == "_"
