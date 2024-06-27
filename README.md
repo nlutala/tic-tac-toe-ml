@@ -24,7 +24,7 @@ Ypu can find the latest version of Python available using this link: https://www
 * To play the game against the CPU that uses machine learning, write the following command in the terminal: ``` python play_ttt_ml.py ``` (You will then start and be prompted to enter a number between, and including, 0 and 9 for where you would like to put your O on the grid).
 
 #### Other comments
-If you would like to play against the CPU that uses machine learning, you must ensure that the ttt_good_moves.txt data exists in the assets/ folder and that there is data in there that helps the CPU make a decision. If not, you will not be able to play against it.
+If you would like to play against the CPU that uses machine learning, you must ensure that the ttt_good_moves.txt file exists in the assets/ folder and that there is data in there that helps the CPU make a decision. If not, you will not be able to play against it.
 
 You can also ignore the create_game_results_ttt.py and the create_ttt_good_moves.py files. But please find a brief description of these files below:
 
