@@ -42,7 +42,7 @@ Enter the position you would like to place your "O".
         if gs.is_done():
             break
         else:
-            gs.set_game_state(cpu.make_move(gs.get_game_state()), cpu.get_symbol())
+            gs.set_game_state(cpu.make_move(gs.get_available_positions()), cpu.get_symbol())
 
     gs.write_results_to_file()
 
