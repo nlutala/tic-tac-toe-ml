@@ -108,10 +108,11 @@ class GameState:
     def write_results_to_file(self) -> None:
         '''
         Private function to write the results of the game to a file
+        in a new directory assets called game_results_ttt.txt
         '''
-        if "game_results_ttt.txt" not in os.listdir():
-            with open("game_results_ttt.txt", "w") as file:
+        if "game_results_ttt.txt" not in os.listdir('assets'):
+            with open("assets/game_results_ttt.txt", "w") as file:
                 file.write("".join(self.game_state) + self.outcome + "\n")
         else:
-            with open("game_results_ttt.txt", "a") as file:
+            with open("assets/game_results_ttt.txt", "a") as file:
                 file.write("".join(self.game_state) + self.outcome + "\n")

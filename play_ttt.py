@@ -12,11 +12,11 @@ if __name__ == "__main__":
     gs = GameState()
     cpu = NaiveCPU()
 
-    taken_places = ["" for i in range(9)]
+    taken_places = ["_" for i in range(9)]
 
     while not gs.is_done():
         for i in range(len(gs.get_game_state())):
-            if gs.get_game_state()[i] == "":
+            if gs.get_game_state()[i] == "_":
                 taken_places[i] = i
             else:
                 taken_places[i] = "X"
