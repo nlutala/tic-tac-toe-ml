@@ -36,68 +36,72 @@ def learn_from_real_game_data() -> None:
     if "game_results_ttt.txt" in os.listdir('assets'):
         with open("assets/game_results_ttt.txt", "r") as file:
             for row in file:
-                gs = GameState()
-                game_state = list(row)[:len(row)-2]
+                if list(row)[len(row)-2] in ["D", "L"]:
+                    gs = GameState()
+                    game_state = list(row)[:len(row)-2]
 
-                player_positions = [
-                    i for i in range(len(game_state))
-                    if game_state[i] == "O"    
-                ]
+                    player_positions = [
+                        i for i in range(len(game_state))
+                        if game_state[i] == "O"    
+                    ]
 
-                remove_player_position = choice(player_positions)
+                    remove_player_position = choice(player_positions)
 
-                game_state[remove_player_position] = "_"
+                    game_state[remove_player_position] = "_"
 
-                cpu_positions = [
-                    i for i in range(len(game_state))
-                    if game_state[i] == "X"    
-                ]
+                    cpu_positions = [
+                        i for i in range(len(game_state))
+                        if game_state[i] == "X"    
+                    ]
 
-                remove_cpu_position = choice(cpu_positions)
+                    remove_cpu_position = choice(cpu_positions)
 
-                game_state[remove_cpu_position] = "_"
+                    game_state[remove_cpu_position] = "_"
 
-                game_states.append(game_state)
+                    game_states.append(game_state)
+
+    print(game_states)
+    # exit()
 
     for game in game_states:
-        for i in range(len(game)):
-            gs = GameState()
+        gs = GameState()
 
+        for i in range(len(game)):
             if game[i] != "_":
                 gs.set_game_state(i, game[i])
 
-            taken_places = ["_" for i in range(9)]
+        taken_places = ["_" for i in range(9)]
 
-            for i in range(len(gs.get_game_state())):
-                if gs.get_game_state()[i] == "_":
-                    taken_places[i] = i
-                else:
-                    taken_places[i] = "X"
+        for i in range(len(gs.get_game_state())):
+            if gs.get_game_state()[i] == "_":
+                taken_places[i] = i
+            else:
+                taken_places[i] = "X"
 
-            for i in range(0, len(taken_places), 3):
-                print(taken_places[i:i+3])
+        for i in range(0, len(taken_places), 3):
+            print(taken_places[i:i+3])
 
-            print("")
+        print("")
 
-            print("This is how the current grid looks like below: \n")
+        print("This is how the current grid looks like below: \n")
 
-            for i in range(0, len(gs.get_game_state()), 3):
-                print(gs.get_game_state()[i:i+3])
+        for i in range(0, len(gs.get_game_state()), 3):
+            print(gs.get_game_state()[i:i+3])
 
-            available_positions = gs.get_available_positions()
+        available_positions = gs.get_available_positions()
+        best_choice = int(input('''
+If you were the player represented with the X, what would be your next move?
+                                
+'''))
+    
+        while best_choice not in available_positions:
+            print("There was something wrong with your input.")
             best_choice = int(input('''
-If you were the player represented with the X, what would be your next move to
-win the game?
-'''))
-        
-            while best_choice not in available_positions:
-                print("There was something wrong with your input.")
-                best_choice = int(input('''
-If you were the player represented with the X, what would be your next move to
-win the game?
+If you were the player represented with the X, what would be your next move?
+                                    
 '''))
 
-            write_results_to_file(gs.get_game_state(), best_choice)
+        write_results_to_file(gs.get_game_state(), best_choice)
 
 
 if __name__ == "__main__":
