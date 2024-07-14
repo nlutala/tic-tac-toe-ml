@@ -14,7 +14,7 @@ class TestGameState(unittest.TestCase):
 
         # Let the Naive CPU put an item in place first
         cpu = NaiveCPU()
-        index = cpu.make_move(gs.get_game_state())
+        index = cpu.make_move(gs.get_available_positions())
         gs.set_game_state(index, cpu.get_symbol())
 
         # Let the human (myself) put an item in the same place the CPU did
@@ -30,11 +30,11 @@ class TestGameState(unittest.TestCase):
 
         # Let the Naive CPU put an item in place first
         cpu = NaiveCPU()
-        index = cpu.make_move(gs.get_game_state())
+        index = cpu.make_move(gs.get_available_positions())
         gs.set_game_state(index, cpu.get_symbol())
 
         # Let the human (myself) put an item in the same place the CPU did
-        free_spaces = [i for i in range(len(gs.get_game_state())) if gs.get_game_state()[i] == ""]
+        free_spaces = gs.get_available_positions()
         gs.set_game_state(choice(free_spaces), "O")
 
         assert gs.is_done() == False
@@ -45,19 +45,25 @@ class TestGameState(unittest.TestCase):
         gs = GameState()
         cpu = NaiveCPU()
 
-        while gs.get_game_state().count("") != 0:
+        while gs.get_game_state().count("_") != 0:
             # Let the Naive CPU put an item in place first
-            index = cpu.make_move(gs.get_game_state())
+            index = cpu.make_move(gs.get_available_positions())
             gs.set_game_state(index, cpu.get_symbol())
 
             # Let the human (myself) put an item in the same place the CPU did
-            free_spaces = [i for i in range(len(gs.get_game_state())) if gs.get_game_state()[i] == ""]
             try:
-                gs.set_game_state(choice(free_spaces), "O")
+                gs.set_game_state(choice(gs.get_available_positions()), "O")
             except IndexError:
                 break
 
+<<<<<<< HEAD
         output_file = os.path.join(base_dir, "game_results_ttt.txt")
+=======
+        gs.write_results_to_file()
+
+        parent_directory = os.path.abspath(os.path.join(base_dir, os.pardir))
+        output_file = os.path.join(parent_directory, "assets", "game_results_ttt.txt")
+>>>>>>> main
         print(output_file)
 
         assert gs.is_done() == True

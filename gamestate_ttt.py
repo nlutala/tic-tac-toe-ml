@@ -8,6 +8,7 @@ Nathan Lutala (nlutala)
 '''
 import os
 
+
 class GameState:
     def __init__(self, write_to_file=True) -> None:
         '''
@@ -21,11 +22,17 @@ class GameState:
         '''
         self.outcome = ""
         # Set up the grid for the tic-tac-toe game
-        self.game_state = ["" for i in range(9)]
+        self.game_state = ["_" for i in range(9)]
         self.write_to_file = write_to_file
 
     def get_game_state(self) -> list:
         return self.game_state
+    
+    def get_available_positions(self) -> list:
+        '''
+        Returns a list of available indexes for players to place an X or an O.
+        '''
+        return [i for i in range(len(self.game_state)) if self.game_state[i] == "_"]
     
     def set_game_state(self, index: int, symbol: str) -> None:
         '''
@@ -36,10 +43,12 @@ class GameState:
         index (int) - the index of the game_state
         symbol (str) - either "X" or "O"
         '''
-        if self.game_state[index] != "":
+        if self.game_state[index] != "_":
             raise ValueError(f"This position has already been taken. Place an {symbol} where there is a free space.")
         else:
             self.game_state[index] = symbol
+
+        self.is_done()
 
     def is_done(self) -> bool:
         '''
@@ -50,63 +59,61 @@ class GameState:
         '''
         is_done = True
 
-        if self.game_state[0] == self.game_state[1] and self.game_state[1] == self.game_state[2] and self.game_state[0] != "":
+        if self.game_state[0] == self.game_state[1] and self.game_state[1] == self.game_state[2] and self.game_state[0] != "_":
             if self.game_state[0] == "X":
                 self.outcome = "W"
             else:
                 self.outcome = "L"
-        elif self.game_state[3] == self.game_state[4] and self.game_state[4] == self.game_state[5] and self.game_state[3] != "":
+        elif self.game_state[3] == self.game_state[4] and self.game_state[4] == self.game_state[5] and self.game_state[3] != "_":
             if self.game_state[3] == "X":
                 self.outcome = "W"
             else:
                 self.outcome = "L"
-        elif self.game_state[6] == self.game_state[7] and self.game_state[7] == self.game_state[8] and self.game_state[6] != "":
+        elif self.game_state[6] == self.game_state[7] and self.game_state[7] == self.game_state[8] and self.game_state[6] != "_":
             if self.game_state[6] == "X":
                 self.outcome = "W"
             else:
                 self.outcome = "L"
-        elif self.game_state[0] == self.game_state[3] and self.game_state[3] == self.game_state[6] and self.game_state[0] != "":
+        elif self.game_state[0] == self.game_state[3] and self.game_state[3] == self.game_state[6] and self.game_state[0] != "_":
             if self.game_state[0] == "X":
                 self.outcome = "W"
             else:
                 self.outcome = "L"
-        elif self.game_state[1] == self.game_state[4] and self.game_state[4] == self.game_state[7] and self.game_state[1] != "":
+        elif self.game_state[1] == self.game_state[4] and self.game_state[4] == self.game_state[7] and self.game_state[1] != "_":
             if self.game_state[1] == "X":
                 self.outcome = "W"
             else:
                 self.outcome = "L"
-        elif self.game_state[2] == self.game_state[5] and self.game_state[5] == self.game_state[8] and self.game_state[2] != "":
+        elif self.game_state[2] == self.game_state[5] and self.game_state[5] == self.game_state[8] and self.game_state[2] != "_":
             if self.game_state[2] == "X":
                 self.outcome = "W"
             else:
                 self.outcome = "L"
-        elif self.game_state[0] == self.game_state[4] and self.game_state[4] == self.game_state[8] and self.game_state[0] != "":
+        elif self.game_state[0] == self.game_state[4] and self.game_state[4] == self.game_state[8] and self.game_state[0] != "_":
             if self.game_state[0] == "X":
                 self.outcome = "W"
             else:
                 self.outcome = "L"
-        elif self.game_state[2] == self.game_state[4] and self.game_state[4] == self.game_state[6] and self.game_state[2] != "":
+        elif self.game_state[2] == self.game_state[4] and self.game_state[4] == self.game_state[6] and self.game_state[2] != "_":
             if self.game_state[2] == "X":
                 self.outcome = "W"
             else:
                 self.outcome = "L"
-        elif self.game_state.count("") == 0:
+        elif self.game_state.count("_") == 0:
             self.outcome = "D"
         else:
             is_done = False
-
-        if is_done:
-            self._write_results_to_file()
         
         return is_done
 
-    def _write_results_to_file(self) -> None:
+    def write_results_to_file(self) -> None:
         '''
         Private function to write the results of the game to a file
+        in a new directory assets called game_results_ttt.txt
         '''
-        if "game_results_ttt.txt" not in os.listdir():
-            with open("game_results_ttt.txt", "w") as file:
+        if "game_results_ttt.txt" not in os.listdir('assets'):
+            with open("assets/game_results_ttt.txt", "w") as file:
                 file.write("".join(self.game_state) + self.outcome + "\n")
         else:
-            with open("game_results_ttt.txt", "a") as file:
+            with open("assets/game_results_ttt.txt", "a") as file:
                 file.write("".join(self.game_state) + self.outcome + "\n")
